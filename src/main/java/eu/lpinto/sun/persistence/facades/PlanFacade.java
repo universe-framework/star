@@ -1,0 +1,49 @@
+package eu.lpinto.sun.persistence.facades;
+
+import eu.lpinto.sun.persistence.entities.Plan;
+import eu.lpinto.sun.persistence.entities.PlanFeature;
+import eu.lpinto.universe.persistence.facades.AbstractFacade;
+import eu.lpinto.universe.persistence.facades.AbstractFacade;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+/**
+ * Plan Facade
+ *
+ * @author Vítor Martins <code>- vitor.martins@petuniversal.com</code>
+ */
+@Stateless
+public class PlanFacade extends AbstractFacade<Plan> {
+
+    @PersistenceContext
+    private EntityManager em;
+
+    public PlanFacade() {
+        super(Plan.class);
+    }
+
+    /*
+     * DAO
+     */
+    @Override
+    public Plan retrieve(Long id) {
+        Plan result = super.retrieve(id);
+
+        result.setFeatures(getEntityManager()
+                .createQuery("select e from PlanFeature e left join fetch e.plan"
+                             + " where e.plan.id = :id", PlanFeature.class).setParameter("id", id).getResultList());
+
+        result.setFull(true);
+
+        return result;
+    }
+
+    /*
+     * Getters/Setters
+     */
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+}
