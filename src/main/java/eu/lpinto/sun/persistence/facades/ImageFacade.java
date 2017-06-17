@@ -2,7 +2,6 @@ package eu.lpinto.sun.persistence.facades;
 
 import eu.lpinto.sun.persistence.entities.Image;
 import eu.lpinto.universe.persistence.facades.AbstractFacade;
-import eu.lpinto.universe.persistence.facades.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,7 +9,7 @@ import javax.persistence.PersistenceContext;
 /**
  * Image Facade
  *
- * @author Vítor Martins <code>- vitor.martins@petuniversal.com</code>
+ * @author Luis Pinto <code>- mail@lpinto.eu</code>
  */
 @Stateless
 public class ImageFacade extends AbstractFacade<Image> {

@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
  *
  * Controller for Emails.
  *
- * @author Vítor Martins <code>- vitor.martins@petuniversal.com</code>
+ * @author Luis Pinto <code>- mail@lpinto.eu</code>
  */
 @Stateless
 public class EmailController {

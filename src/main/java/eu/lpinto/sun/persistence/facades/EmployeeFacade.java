@@ -5,7 +5,6 @@ import eu.lpinto.sun.persistence.entities.Employee;
 import eu.lpinto.sun.persistence.entities.Person;
 import eu.lpinto.sun.persistence.entities.WorkerProfile;
 import eu.lpinto.universe.persistence.facades.AbstractFacade;
-import eu.lpinto.universe.persistence.facades.AbstractFacade;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +18,7 @@ import javax.persistence.PersistenceContext;
 /**
  * EJB facade for shelter-people relation.
  *
- * @author Luis Pinto <code>- luis.pinto@petuniversal.com</code>
+ * @author Luis Pinto <code>- mail@lpinto.eu</code>
  */
 @Stateless
 public class EmployeeFacade extends AbstractFacade<Employee> {

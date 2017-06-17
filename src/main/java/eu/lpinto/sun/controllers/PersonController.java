@@ -1,7 +1,6 @@
 package eu.lpinto.sun.controllers;
 
 import eu.lpinto.universe.controllers.AbstractControllerCRUD;
-import eu.lpinto.universe.controllers.AbstractControllerCRUD;
 import eu.lpinto.universe.controllers.exceptions.PermissionDeniedException;
 import eu.lpinto.sun.persistence.entities.Person;
 import eu.lpinto.universe.persistence.facades.AbstractFacade;
@@ -16,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Luís Pinto - mail@lpinto.eu
+ * @author Luis Pinto <code>- mail@lpinto.eu</code>
  */
 @Stateless
 public class PersonController extends AbstractControllerCRUD<Person> {
@@ -38,7 +37,7 @@ public class PersonController extends AbstractControllerCRUD<Person> {
             /*
              * Preconditions
              */
-            List<Person> personPhone = new ArrayList<Person>();
+            List<Person> personPhone = new ArrayList<>();
 
             List<eu.lpinto.sun.persistence.entities.Person> savedPhones;
 

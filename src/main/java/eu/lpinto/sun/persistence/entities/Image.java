@@ -1,7 +1,6 @@
 package eu.lpinto.sun.persistence.entities;
 
 import eu.lpinto.universe.persistence.entities.AbstractEntity;
-import eu.lpinto.universe.persistence.entities.AbstractEntity;
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
@@ -11,7 +10,7 @@ import javax.persistence.Table;
 /**
  * Image Entity
  *
- * @author Vítor Martins <code>- vitor.martins@petuniversal.com</code>
+ * @author Luis Pinto <code>- mail@lpinto.eu</code>
  */
 @Entity
 @Table(name = "Image")
