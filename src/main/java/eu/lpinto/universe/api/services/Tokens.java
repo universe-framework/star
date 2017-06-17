@@ -1,4 +1,4 @@
-package eu.lpinto.sun.api.services;
+package eu.lpinto.universe.api.services;
 
 import eu.lpinto.universe.api.dto.Errors;
 import eu.lpinto.universe.controllers.exceptions.PreConditionException;

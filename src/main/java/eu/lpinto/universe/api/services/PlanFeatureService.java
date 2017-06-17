@@ -1,4 +1,4 @@
-package eu.lpinto.sun.api.services;
+package eu.lpinto.universe.api.services;
 
 import eu.lpinto.universe.controllers.exceptions.PermissionDeniedException;
 import eu.lpinto.sun.api.dts.PlanFeatureDTS;

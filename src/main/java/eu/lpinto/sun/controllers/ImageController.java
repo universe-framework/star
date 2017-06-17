@@ -5,15 +5,14 @@ import com.microsoft.azure.storage.StorageException;
 import com.microsoft.azure.storage.blob.CloudBlobClient;
 import com.microsoft.azure.storage.blob.CloudBlobContainer;
 import com.microsoft.azure.storage.blob.CloudBlockBlob;
-import eu.lpinto.universe.controllers.AbstractControllerCRUD;
+import eu.lpinto.sun.persistence.entities.Image;
+import eu.lpinto.sun.persistence.entities.Organization;
+import eu.lpinto.sun.persistence.facades.ImageFacade;
 import eu.lpinto.universe.controllers.AbstractControllerCRUD;
 import eu.lpinto.universe.controllers.exceptions.PermissionDeniedException;
 import eu.lpinto.universe.controllers.exceptions.PreConditionException;
 import eu.lpinto.universe.controllers.exceptions.UnknownIdException;
-import eu.lpinto.sun.persistence.entities.Image;
-import eu.lpinto.sun.persistence.entities.Organization;
 import eu.lpinto.universe.persistence.facades.AbstractFacade;
-import eu.lpinto.sun.persistence.facades.ImageFacade;
 import eu.lpinto.universe.util.UniverseFundamentals;
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,6 +51,10 @@ public class ImageController extends AbstractControllerCRUD<Image> {
      * Upload
      */
     public String upload(final String filePath, final String folder) {
+        if (UniverseFundamentals.ENV == null) {
+            return Organization.DEFAULT_IMG;
+        }
+
         switch (UniverseFundamentals.ENV) {
             case UniverseFundamentals.Enviroments.DEV: {
                 return devUpload(filePath, folder);
@@ -85,16 +88,13 @@ public class ImageController extends AbstractControllerCRUD<Image> {
             String result = IMAGE_URL_PREFIX + folder + sourceFile.getName();
             return result;
 
-        }
-        catch (FileNotFoundException fileNotFoundException) {
+        } catch (FileNotFoundException fileNotFoundException) {
             LOGGER.error("FileNotFoundException encountered: " + fileNotFoundException.getMessage());
             return null;
-        }
-        catch (StorageException storageException) {
+        } catch (StorageException storageException) {
             LOGGER.error("StorageException encountered: " + storageException.getMessage());
             return null;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.error("Exception encountered: " + e.getMessage());
             return null;
         }
@@ -118,16 +118,13 @@ public class ImageController extends AbstractControllerCRUD<Image> {
             String result = IMAGE_URL_PREFIX + folder + sourceFile.getName();
             return result;
 
-        }
-        catch (FileNotFoundException fileNotFoundException) {
+        } catch (FileNotFoundException fileNotFoundException) {
             LOGGER.error("FileNotFoundException encountered: " + fileNotFoundException.getMessage());
             return null;
-        }
-        catch (StorageException storageException) {
+        } catch (StorageException storageException) {
             LOGGER.error("StorageException encountered: " + storageException.getMessage());
             return null;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.error("Exception encountered: " + e.getMessage());
             return null;
         }
@@ -138,9 +135,7 @@ public class ImageController extends AbstractControllerCRUD<Image> {
 //        return result;
 
         String[] subpath = filePath.split("/");
-        String aux = UniverseFundamentals.AVATAR_URL_PREFIX + "/" + subpath[subpath.length - 3] + "/" + subpath[subpath.length - 2] + "/" + subpath[subpath.length - 1];
-        System.out.println("IMAGE URL: " + aux);
-        return aux;
+        return IMAGE_URL_PREFIX + "/" + subpath[subpath.length - 3] + "/" + subpath[subpath.length - 2] + "/" + subpath[subpath.length - 1];
     }
 
     /*
@@ -191,13 +186,10 @@ public class ImageController extends AbstractControllerCRUD<Image> {
             CloudBlockBlob blob = container.getBlockBlobReference(filePath);
             blob.delete();
 
-        }
-        catch (URISyntaxException | InvalidKeyException ex) {
-        }
-        catch (StorageException ex) {
+        } catch (URISyntaxException | InvalidKeyException ex) {
+        } catch (StorageException ex) {
             LOGGER.error("StorageException encountered: " + ex.getMessage());
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             LOGGER.error("Exception encountered: " + e.getMessage());
         }
     }
@@ -215,13 +207,10 @@ public class ImageController extends AbstractControllerCRUD<Image> {
             CloudBlockBlob blob = container.getBlockBlobReference("qa/" + filePath);
             blob.delete();
 
-        }
-        catch (URISyntaxException | InvalidKeyException ex) {
-        }
-        catch (StorageException ex) {
+        } catch (URISyntaxException | InvalidKeyException ex) {
+        } catch (StorageException ex) {
             LOGGER.error("StorageException encountered: " + ex.getMessage());
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             LOGGER.error("Exception encountered: " + e.getMessage());
         }
     }
