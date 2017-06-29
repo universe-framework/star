@@ -4,7 +4,6 @@ import eu.lpinto.sun.persistence.entities.Employee;
 import eu.lpinto.sun.persistence.entities.Person;
 import eu.lpinto.sun.persistence.entities.WorkerProfile;
 import eu.lpinto.universe.persistence.facades.AbstractFacade;
-import eu.lpinto.universe.persistence.facades.AbstractFacade;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +58,7 @@ public class PersonFacade extends AbstractFacade<Person> {
         Person result = super.retrieve(id);
 
         result.setOrganizations(getEntityManager()
-                .createQuery("select e from OrganizationPerson e left join fetch e.person"
+                .createQuery("select e from Employee e left join fetch e.person"
                              + " where e.person.id = :id", Employee.class).setParameter("id", id).getResultList());
 
         result.setFull(true);
@@ -81,8 +80,7 @@ public class PersonFacade extends AbstractFacade<Person> {
 
         try {
             savedPersons = em.createNamedQuery("Person.findAllPhones").getResultList();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new IllegalArgumentException("Error in findAllPhones querry");
         }
 
@@ -140,8 +138,7 @@ public class PersonFacade extends AbstractFacade<Person> {
                 throw new IllegalArgumentException("No phones in the DataBase");
             }
             return savedPersons;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new IllegalArgumentException("Error in findAllPhones querry");
         }
     }
@@ -165,8 +162,7 @@ public class PersonFacade extends AbstractFacade<Person> {
                     .getResultList();
 
             return clinicPeople;
-        }
-        catch (NoResultException ex) {
+        } catch (NoResultException ex) {
             return null;
         }
     }
@@ -176,12 +172,10 @@ public class PersonFacade extends AbstractFacade<Person> {
         if ("staff".equals(profile)) {
             profiles = Arrays.asList(WorkerProfile.ADMIN, WorkerProfile.DOCTOR, WorkerProfile.NURSE, WorkerProfile.EMPLOYEE);
 
-        }
-        else if ("client".equals(profile)) {
+        } else if ("client".equals(profile)) {
             profiles = Arrays.asList(WorkerProfile.CANDIDATE);
 
-        }
-        else {
+        } else {
             profiles = new ArrayList<>(0);
         }
 
@@ -193,8 +187,7 @@ public class PersonFacade extends AbstractFacade<Person> {
                     .getResultList();
 
             return clinicPeople;
-        }
-        catch (NoResultException ex) {
+        } catch (NoResultException ex) {
             return null;
         }
     }
