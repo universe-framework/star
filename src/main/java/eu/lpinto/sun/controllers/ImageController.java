@@ -9,9 +9,7 @@ import eu.lpinto.sun.persistence.entities.Image;
 import eu.lpinto.sun.persistence.entities.Organization;
 import eu.lpinto.sun.persistence.facades.ImageFacade;
 import eu.lpinto.universe.controllers.AbstractControllerCRUD;
-import eu.lpinto.universe.controllers.exceptions.PermissionDeniedException;
 import eu.lpinto.universe.controllers.exceptions.PreConditionException;
-import eu.lpinto.universe.controllers.exceptions.UnknownIdException;
 import eu.lpinto.universe.persistence.facades.AbstractFacade;
 import eu.lpinto.universe.util.UniverseFundamentals;
 import java.io.File;
@@ -75,11 +73,15 @@ public class ImageController extends AbstractControllerCRUD<Image> {
             CloudStorageAccount account = CloudStorageAccount.parse(STORAGE_CONNECTION_STRING);
             CloudBlobClient serviceClient = account.createCloudBlobClient();
 
-            /* Container name must be lower case. */
+            /*
+             * Container name must be lower case.
+             */
             CloudBlobContainer container = serviceClient.getContainerReference("images");
             boolean created = container.createIfNotExists();
 
-            /* Upload an image file. */
+            /*
+             * Upload an image file.
+             */
             File sourceFile = new File(filePath);
             CloudBlockBlob blob = container.getBlockBlobReference(folder + sourceFile.getName());
 
@@ -105,11 +107,15 @@ public class ImageController extends AbstractControllerCRUD<Image> {
             CloudStorageAccount account = CloudStorageAccount.parse(STORAGE_CONNECTION_STRING);
             CloudBlobClient serviceClient = account.createCloudBlobClient();
 
-            /* Container name must be lower case. */
+            /*
+             * Container name must be lower case.
+             */
             CloudBlobContainer container = serviceClient.getContainerReference("images");
             boolean created = container.createIfNotExists();
 
-            /* Upload an image file. */
+            /*
+             * Upload an image file.
+             */
             File sourceFile = new File(filePath);
             CloudBlockBlob blob = container.getBlockBlobReference("qa/" + folder + sourceFile.getName());
 
@@ -142,7 +148,7 @@ public class ImageController extends AbstractControllerCRUD<Image> {
      * Delete
      */
     @Override
-    public void doDelete(final Image savedEntity) throws UnknownIdException, PermissionDeniedException, PreConditionException {
+    public void doDelete(final Image savedEntity) throws PreConditionException {
         String url = savedEntity.getUrl();
 
         String[] subsUrls = url.split("/");
@@ -178,11 +184,15 @@ public class ImageController extends AbstractControllerCRUD<Image> {
             CloudStorageAccount account = CloudStorageAccount.parse(STORAGE_CONNECTION_STRING);
             CloudBlobClient serviceClient = account.createCloudBlobClient();
 
-            /* Container name must be lower case. */
+            /*
+             * Container name must be lower case.
+             */
             CloudBlobContainer container = serviceClient.getContainerReference("images");
             boolean created = container.createIfNotExists();
 
-            /* delete an image file. */
+            /*
+             * delete an image file.
+             */
             CloudBlockBlob blob = container.getBlockBlobReference(filePath);
             blob.delete();
 
@@ -199,11 +209,15 @@ public class ImageController extends AbstractControllerCRUD<Image> {
             CloudStorageAccount account = CloudStorageAccount.parse(STORAGE_CONNECTION_STRING);
             CloudBlobClient serviceClient = account.createCloudBlobClient();
 
-            /* Container name must be lower case. */
+            /*
+             * Container name must be lower case.
+             */
             CloudBlobContainer container = serviceClient.getContainerReference("images");
             boolean created = container.createIfNotExists();
 
-            /* delete an image file. */
+            /*
+             * delete an image file.
+             */
             CloudBlockBlob blob = container.getBlockBlobReference("qa/" + filePath);
             blob.delete();
 

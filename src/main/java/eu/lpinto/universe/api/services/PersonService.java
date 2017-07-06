@@ -1,10 +1,9 @@
 package eu.lpinto.universe.api.services;
 
-import eu.lpinto.universe.controllers.exceptions.PermissionDeniedException;
 import eu.lpinto.sun.api.dto.Person;
 import eu.lpinto.sun.api.dts.PersonDTS;
-import eu.lpinto.universe.api.services.AbstractServiceCRUD;
-import eu.lpinto.universe.api.services.AbstractServiceCRUD;
+import eu.lpinto.universe.controllers.exceptions.PermissionDeniedException;
+import eu.lpinto.universe.controllers.exceptions.PreConditionException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,8 +43,7 @@ public class PersonService extends AbstractServiceCRUD<eu.lpinto.sun.persistence
             if (values != null && values.size() == 1) {
                 try {
                     options.put(key, Long.valueOf(values.get(0)));
-                }
-                catch (NumberFormatException ex) {
+                } catch (NumberFormatException ex) {
                     return response(Response.Status.BAD_REQUEST, "Invalid " + key + " id, expected a number fut found [" + values.get(0) + "]");
                 }
             }
@@ -55,21 +53,21 @@ public class PersonService extends AbstractServiceCRUD<eu.lpinto.sun.persistence
             if (values != null && values.size() == 1) {
                 try {
                     options.put(key, values.get(0));
-                }
-                catch (NumberFormatException ex) {
+                } catch (NumberFormatException ex) {
                     return response(Response.Status.BAD_REQUEST, "Invalid " + key + " id, expected a number fut found [" + values.get(0) + "]");
                 }
             }
 
             return ok(PersonDTS.T.toAPI(controller.find(userID, options)));
 
-        }
-        catch (PermissionDeniedException ex) {
+        } catch (PermissionDeniedException ex) {
             LOGGER.debug(ex.getMessage(), ex);
             return forbidden(userID);
 
-        }
-        catch (RuntimeException ex) {
+        } catch (PreConditionException ex) {
+            return badRequest(ex.getMessage());
+
+        } catch (RuntimeException ex) {
             LOGGER.error(ex.getMessage(), ex);
             return internalError(ex);
         }
