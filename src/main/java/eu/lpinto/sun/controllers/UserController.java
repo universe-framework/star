@@ -1,15 +1,14 @@
 package eu.lpinto.sun.controllers;
 
-import eu.lpinto.universe.controllers.exceptions.PermissionDeniedException;
-import eu.lpinto.universe.controllers.exceptions.PreConditionException;
-import eu.lpinto.universe.controllers.exceptions.UnknownIdException;
-import eu.lpinto.universe.api.util.Digest;
-import eu.lpinto.universe.controllers.AbstractControllerCRUD;
-import eu.lpinto.universe.controllers.AbstractControllerCRUD;
 import eu.lpinto.sun.persistence.entities.Person;
 import eu.lpinto.sun.persistence.entities.User;
 import eu.lpinto.sun.persistence.facades.PersonFacade;
 import eu.lpinto.sun.persistence.facades.UserFacade;
+import eu.lpinto.universe.api.util.Digest;
+import eu.lpinto.universe.controllers.AbstractControllerCRUD;
+import eu.lpinto.universe.controllers.exceptions.PermissionDeniedException;
+import eu.lpinto.universe.controllers.exceptions.PreConditionException;
+import eu.lpinto.universe.controllers.exceptions.UnknownIdException;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.logging.Level;
@@ -59,8 +58,7 @@ public class UserController extends AbstractControllerCRUD<User> {
         try {
             savedUser = facade.findByEmail(email);
 
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             throw internalError(ex);
         }
 
@@ -69,10 +67,14 @@ public class UserController extends AbstractControllerCRUD<User> {
         }
 
         if (userID.equals(savedUser.getId()) || isSystemAdmin(userID)) {
-            /* Own data, or admin - Retrieve all data */
+            /*
+             * Own data, or admin - Retrieve all data
+             */
             return savedUser;
         } else {
-            /* TODO retrieve only public data */
+            /*
+             * TODO retrieve only public data
+             */
             return savedUser;
         }
     }
@@ -93,8 +95,7 @@ public class UserController extends AbstractControllerCRUD<User> {
         try {
             savedUser = facade.findByEmail(email);
 
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             throw internalError(ex);
         }
 
@@ -144,15 +145,13 @@ public class UserController extends AbstractControllerCRUD<User> {
                                   + "</p>";
 
             emailController.sendEmail(user.getEmail(), "password", emailMessage);
-        }
-
-        catch (UnknownIdException ex) {
+        } catch (UnknownIdException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void doCreate(User entity, final Map<String, Object> options) throws PreConditionException, UnknownIdException, PermissionDeniedException {
+    public void doCreate(User entity, final Map<String, Object> options) throws PreConditionException {
 
         Person newPerson = new Person(entity.getName());
         newPerson.setEmail(entity.getEmail());

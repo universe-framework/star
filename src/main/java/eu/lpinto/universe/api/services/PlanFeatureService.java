@@ -1,12 +1,11 @@
 package eu.lpinto.universe.api.services;
 
-import eu.lpinto.universe.controllers.exceptions.PermissionDeniedException;
 import eu.lpinto.sun.api.dts.PlanFeatureDTS;
-import eu.lpinto.universe.api.services.AbstractServiceCRUD;
-import eu.lpinto.universe.api.services.AbstractServiceCRUD;
 import eu.lpinto.sun.controllers.PlanFeatureController;
 import eu.lpinto.sun.persistence.entities.Plan;
 import eu.lpinto.sun.persistence.entities.PlanFeature;
+import eu.lpinto.universe.controllers.exceptions.PermissionDeniedException;
+import eu.lpinto.universe.controllers.exceptions.PreConditionException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,15 +64,17 @@ public class PlanFeatureService extends AbstractServiceCRUD<eu.lpinto.sun.persis
                 }
             }
 
-            return ok(PlanFeatureDTS.T.toAPI(controller.findAll(userID)));
+            return ok(PlanFeatureDTS.T.toAPI(controller.find(userID, null)));
 
-        }
-        catch (PermissionDeniedException ex) {
+        } catch (PermissionDeniedException ex) {
             LOGGER.debug(ex.getMessage(), ex);
             return forbidden(userID);
 
-        }
-        catch (RuntimeException ex) {
+        } catch (PreConditionException ex) {
+            LOGGER.debug(ex.getMessage(), ex);
+            return badRequest(ex.getMessage());
+
+        } catch (RuntimeException ex) {
             LOGGER.error(ex.getMessage(), ex);
             return internalError(ex);
         }
