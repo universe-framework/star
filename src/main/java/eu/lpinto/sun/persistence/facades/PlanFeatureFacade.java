@@ -4,7 +4,6 @@ import eu.lpinto.sun.persistence.entities.Feature;
 import eu.lpinto.sun.persistence.entities.Plan;
 import eu.lpinto.sun.persistence.entities.PlanFeature;
 import eu.lpinto.universe.persistence.facades.AbstractFacade;
-import eu.lpinto.universe.persistence.facades.AbstractFacade;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -43,16 +42,23 @@ public class PlanFeatureFacade extends AbstractFacade<PlanFeature> {
      */
     @Override
     public List<PlanFeature> find(final Map<String, Object> options) {
-        PlanFeature entity = (PlanFeature) options.get("entity");
-        if (entity == null) {
-            throw new AssertionError("Cannot find for [null] entity. Maybe you want to call findAll().");
+        if (options == null) {
+            return findAll();
 
-        }
-        if (entity.getPlan() != null && entity.getPlan().getId() != null) {
-            return getByPlan(entity.getPlan().getId());
+        } else {
+            if (options.containsKey("entity")) {
+                PlanFeature entity = options.get("entity") == null ? null : (PlanFeature) options.get("entity");
+                if (entity == null) {
+                    throw new AssertionError("Cannot find for [null] entity. Maybe you want to call findAll().");
+
+                }
+                if (entity.getPlan() != null && entity.getPlan().getId() != null) {
+                    return getByPlan(entity.getPlan().getId());
+                }
+            }
         }
 
-        return findAll();
+        throw new IllegalArgumentException();
     }
 
     @Override
@@ -166,8 +172,7 @@ public class PlanFeatureFacade extends AbstractFacade<PlanFeature> {
             TypedQuery<PlanFeature> query = getEntityManager().createQuery(
                     "SELECT p FROM PlanFeature p WHERE p.plan.id = :planID", PlanFeature.class);
             return query.setParameter("planID", planID).getResultList();
-        }
-        catch (NoResultException ex) {
+        } catch (NoResultException ex) {
             return null;
         }
     }
