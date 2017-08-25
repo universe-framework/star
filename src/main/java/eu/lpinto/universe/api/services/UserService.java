@@ -10,8 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,27 +41,6 @@ public class UserService extends AbstractServiceCRUD<eu.lpinto.sun.persistence.e
     /*
      * Services
      */
-    @GET
-    @Path("me")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response me(final @Context UriInfo uriInfo, final @HeaderParam("userID") Long userID) throws PermissionDeniedException {
-        try {
-            if (userID == null) {
-                return unprocessableEntity(new Errors().addError("user.id", "Missing id"));
-            }
-
-            return ok(eu.lpinto.sun.api.dts.UserDTS.T.toAPI(controller.retrieve(userID, userID)));
-
-        } catch (UnknownIdException ex) {
-            return unknown(userID);
-
-        } catch (RuntimeException ex) {
-            return internalError(ex);
-        } catch (PreConditionException ex) {
-            return unprocessableEntity(new Errors(ex.getErrors()));
-        }
-    }
-
     @Override
     public Response doFind(final UriInfo uriInfo, final Long userID) {
         try {
@@ -66,6 +51,11 @@ public class UserService extends AbstractServiceCRUD<eu.lpinto.sun.persistence.e
              * filter by hasClinic
              */
             List<String> hasClinics = queryParameters.get("hasClinic");
+
+            /*
+             * filter by me
+             */
+            List<String> mes = queryParameters.get("me");
 
             if (hasClinics != null) {
                 if (hasClinics.size() == 1) {
@@ -78,19 +68,28 @@ public class UserService extends AbstractServiceCRUD<eu.lpinto.sun.persistence.e
                 }
             }
 
+            if (mes != null) {
+                if (mes.size() == 1) {
+                    if (mes.get(0) == null || mes.get(0).isEmpty()) {
+                        return badRequest("Cannot search Users by me id with empty value");
+                    } else {
+                        return ok(UserDTS.T.toAPI(controller.retrieve(userID, userID)));
+                    }
+                }
+            }
+
             return ok(UserDTS.T.toAPI(controller.find(userID, options)));
 
+        } catch (UnknownIdException ex) {
+            return unknown(userID);
         } catch (PermissionDeniedException ex) {
             LOGGER.debug(ex.getMessage(), ex);
             return forbidden(userID);
-
-        } catch (PreConditionException ex) {
-            LOGGER.debug(ex.getMessage(), ex);
-            return badRequest(ex.getMessage());
-
         } catch (RuntimeException ex) {
             LOGGER.error(ex.getMessage(), ex);
             return internalError(ex);
+        } catch (PreConditionException ex) {
+            return unprocessableEntity(new Errors(ex.getErrors()));
         }
     }
 
