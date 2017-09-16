@@ -1,12 +1,13 @@
 package eu.lpinto.universe.api.services;
 
-import eu.lpinto.universe.api.dto.Errors;
-import eu.lpinto.universe.controllers.exceptions.PreConditionException;
 import eu.lpinto.sun.api.dts.UserDTS;
-import eu.lpinto.universe.api.services.AbstractService;
 import eu.lpinto.sun.controllers.TokenController;
 import eu.lpinto.sun.persistence.entities.Token;
 import eu.lpinto.sun.persistence.entities.User;
+import eu.lpinto.universe.api.dto.Errors;
+import eu.lpinto.universe.controllers.exceptions.PreConditionException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ws.rs.Consumes;
@@ -37,11 +38,13 @@ public class Tokens extends AbstractService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(@FormParam("grant_type") String grantType, @FormParam("username") String email, @FormParam("password") String password) {
         try {
-            User user = UserDTS.T.toDomain(email, password);
+            Map<String, String> result = new HashMap<>(2);
 
+            User user = UserDTS.T.toDomain(email, password);
             Token newToken = controller.login(user);
 
-            String result = "{\"access_token\": \"" + newToken.getToken() + "\"}";
+            result.put("access_token", newToken.getToken());
+            result.put("user_id", String.valueOf(user.getId()));
 
             return ok(result);
         }
