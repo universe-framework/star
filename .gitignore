@@ -18,5 +18,5 @@ nb-configuration.xml
 log/
 target/
 
-# Pet Shelter
+# Database
 sql/
