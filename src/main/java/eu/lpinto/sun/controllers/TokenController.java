@@ -1,11 +1,11 @@
 package eu.lpinto.sun.controllers;
 
-import eu.lpinto.universe.controllers.exceptions.PreConditionException;
-import eu.lpinto.universe.api.util.Digest;
 import eu.lpinto.sun.persistence.entities.Token;
 import eu.lpinto.sun.persistence.entities.User;
 import eu.lpinto.sun.persistence.facades.TokenFacade;
 import eu.lpinto.sun.persistence.facades.UserFacade;
+import eu.lpinto.universe.api.util.Digest;
+import eu.lpinto.universe.controllers.exceptions.PreConditionException;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -23,11 +23,13 @@ public class TokenController {
     @EJB
     private UserFacade userFacade;
 
+    static final String SALT = "eu.lpinto.star.TokenController";
+
     /*
      * Custom controller services
      */
     public Token login(final User user) throws PreConditionException {
-        String accessToken = Digest.getSHA(user.getId() + "." + String.valueOf(System.currentTimeMillis()), "petuniversalaccesstoken");
+        String accessToken = Digest.getSHA(user.getId() + "." + String.valueOf(System.currentTimeMillis()), SALT);
 
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
             throw new PreConditionException("token.email", "Missing email");
