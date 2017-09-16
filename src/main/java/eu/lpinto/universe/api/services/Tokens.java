@@ -44,16 +44,12 @@ public class Tokens extends AbstractService {
             Token newToken = controller.login(user);
 
             result.put("access_token", newToken.getToken());
-            result.put("user_id", String.valueOf(user.getId()));
+            result.put("user_id", String.valueOf(newToken.getUser().getId()));
 
             return ok(result);
-        }
-
-        catch (PreConditionException ex) {
+        } catch (PreConditionException ex) {
             return unprocessableEntity(new Errors(ex.getErrors()));
-        }
-
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             return internalError(ex);
         }
     }
