@@ -1,7 +1,6 @@
 package eu.lpinto.sun.controllers;
 
 import eu.lpinto.universe.controllers.AbstractControllerCRUD;
-import eu.lpinto.universe.controllers.AbstractControllerCRUD;
 import eu.lpinto.sun.persistence.entities.PlanFeature;
 import eu.lpinto.universe.persistence.facades.AbstractFacade;
 import eu.lpinto.sun.persistence.facades.PlanFeatureFacade;
@@ -23,7 +22,7 @@ public class PlanFeatureController extends AbstractControllerCRUD<PlanFeature> {
     }
 
     @Override
-    protected AbstractFacade<PlanFeature> getFacade() {
+    public AbstractFacade<PlanFeature> getFacade() {
         return facade;
     }
 }

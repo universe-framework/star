@@ -1,7 +1,6 @@
 package eu.lpinto.sun.controllers;
 
 import eu.lpinto.universe.controllers.AbstractControllerCRUD;
-import eu.lpinto.universe.controllers.AbstractControllerCRUD;
 import eu.lpinto.sun.persistence.entities.Feature;
 import eu.lpinto.sun.persistence.facades.FeatureFacade;
 import javax.ejb.EJB;
@@ -22,7 +21,7 @@ public class FeatureController extends AbstractControllerCRUD<Feature> {
     }
 
     @Override
-    protected FeatureFacade getFacade() {
+    public FeatureFacade getFacade() {
         return facade;
     }
 }

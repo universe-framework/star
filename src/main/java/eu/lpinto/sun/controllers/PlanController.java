@@ -1,7 +1,6 @@
 package eu.lpinto.sun.controllers;
 
 import eu.lpinto.universe.controllers.AbstractControllerCRUD;
-import eu.lpinto.universe.controllers.AbstractControllerCRUD;
 import eu.lpinto.sun.persistence.entities.Plan;
 import eu.lpinto.sun.persistence.facades.PlanFacade;
 import javax.ejb.EJB;
@@ -22,7 +21,7 @@ public class PlanController extends AbstractControllerCRUD<Plan> {
     }
 
     @Override
-    protected PlanFacade getFacade() {
+    public PlanFacade getFacade() {
         return facade;
     }
 }

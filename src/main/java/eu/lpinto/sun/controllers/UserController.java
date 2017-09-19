@@ -163,7 +163,7 @@ public class UserController extends AbstractControllerCRUD<User> {
     }
 
     @Override
-    protected UserFacade getFacade() {
+    public UserFacade getFacade() {
         return facade;
     }
 

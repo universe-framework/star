@@ -1,7 +1,6 @@
 package eu.lpinto.sun.controllers;
 
 import eu.lpinto.universe.controllers.AbstractControllerCRUD;
-import eu.lpinto.universe.controllers.AbstractControllerCRUD;
 import eu.lpinto.sun.persistence.entities.Organization;
 import eu.lpinto.sun.persistence.facades.OrganizationFacade;
 import javax.ejb.EJB;
@@ -23,7 +22,7 @@ public class OrganizationController extends AbstractControllerCRUD<Organization>
     }
 
     @Override
-    protected OrganizationFacade getFacade() {
+    public OrganizationFacade getFacade() {
         return facade;
     }
 }

@@ -248,7 +248,7 @@ public class ImageController extends AbstractControllerCRUD<Image> {
 //        return bFile;
 //    }
     @Override
-    protected AbstractFacade<Image> getFacade() {
+    public AbstractFacade<Image> getFacade() {
         return facade;
     }
 }

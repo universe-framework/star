@@ -1,8 +1,8 @@
 package eu.lpinto.sun.controllers;
 
-import eu.lpinto.universe.controllers.AbstractControllerCRUD;
 import eu.lpinto.sun.persistence.entities.Employee;
 import eu.lpinto.sun.persistence.facades.EmployeeFacade;
+import eu.lpinto.universe.controllers.AbstractControllerCRUD;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -22,7 +22,7 @@ public class EmployeeController extends AbstractControllerCRUD<Employee> {
     }
 
     @Override
-    protected EmployeeFacade getFacade() {
+    public EmployeeFacade getFacade() {
         return facade;
     }
 }
