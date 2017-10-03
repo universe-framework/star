@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Organization_Person")
 @NamedQueries({
-    @NamedQuery(name = "Employee.findByPMSOrganization", query = "SELECT cp FROM Employee cp WHERE( cp.pmsID = :pmsID AND cp.organization.id = :organizationID)"),})
+    @NamedQuery(name = "Employee.findByPMSOrganization", query = "SELECT cp FROM Employee cp WHERE( cp.externalID = :externalID AND cp.organization.id = :organizationID)"),})
 public class Employee extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
