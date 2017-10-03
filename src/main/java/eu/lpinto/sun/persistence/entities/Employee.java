@@ -1,7 +1,6 @@
 package eu.lpinto.sun.persistence.entities;
 
 import eu.lpinto.universe.persistence.entities.AbstractEntity;
-import eu.lpinto.universe.persistence.entities.AbstractEntity;
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.*;
@@ -18,7 +17,7 @@ public class Employee extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String pmsID;
+    private Long externalID;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE) // cascade merge will update target object with this instance
     private Person person;
@@ -40,18 +39,18 @@ public class Employee extends AbstractEntity implements Serializable {
         super(id);
     }
 
-    public Employee(final String pmsID, final Person person, final Organization organization, final WorkerProfile profile) {
+    public Employee(final Long externalID, final Person person, final Organization organization, final WorkerProfile profile) {
         super();
-        this.pmsID = pmsID;
+        this.externalID = externalID;
         this.person = person;
         this.organization = organization;
         this.profile = profile;
     }
 
-    public Employee(final String pmsID, final Person person, final Organization organization, final WorkerProfile profile,
-                              final Long id, final String name, final Calendar created, final Calendar updated) {
+    public Employee(final Long externalID, final Person person, final Organization organization, final WorkerProfile profile,
+                    final Long id, final String name, final Calendar created, final Calendar updated) {
         super(id, name, created, updated);
-        this.pmsID = pmsID;
+        this.externalID = externalID;
         this.person = person;
         this.organization = organization;
         this.profile = profile;
@@ -60,12 +59,12 @@ public class Employee extends AbstractEntity implements Serializable {
     /*
      * Getters/Setters
      */
-    public String getPmsID() {
-        return pmsID;
+    public Long getExternalID() {
+        return externalID;
     }
 
-    public void setPmsID(String pmsID) {
-        this.pmsID = pmsID;
+    public void setExternalID(Long externalID) {
+        this.externalID = externalID;
     }
 
     public Organization getOrganization() {

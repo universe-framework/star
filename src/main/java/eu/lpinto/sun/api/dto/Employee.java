@@ -1,7 +1,6 @@
 package eu.lpinto.sun.api.dto;
 
 import eu.lpinto.universe.api.dto.AbstractDTO;
-import eu.lpinto.universe.api.dto.AbstractDTO;
 import eu.lpinto.sun.persistence.entities.WorkerProfile;
 import java.util.Calendar;
 
@@ -14,7 +13,7 @@ public class Employee extends AbstractDTO {
 
     private static final long serialVersionUID = 1L;
 
-    private String pmsID;
+    private Long externalID;
     private Long person;
     private Long organization;
     private Integer role;
@@ -25,17 +24,17 @@ public class Employee extends AbstractDTO {
     public Employee() {
     }
 
-    public Employee(final String pmsID, final Long person, final Long organization, final Integer role) {
-        this.pmsID = pmsID;
+    public Employee(final Long externalID, final Long person, final Long organization, final Integer role) {
+        this.externalID = externalID;
         this.person = person;
         this.organization = organization;
         this.role = role;
     }
 
-    public Employee(final String pmsID, final Long person, final Long organization, final Integer role,
-                              final Long id, final String name, final Calendar created, final Calendar updated) {
+    public Employee(final Long externalID, final Long person, final Long organization, final Integer role,
+                    final Long id, final String name, final Calendar created, final Calendar updated) {
         super(id, name, created, updated);
-        this.pmsID = pmsID;
+        this.externalID = externalID;
         this.person = person;
         this.organization = organization;
         this.role = role;
@@ -44,12 +43,12 @@ public class Employee extends AbstractDTO {
     /*
      * Getters/Setters
      */
-    public String getPmsID() {
-        return pmsID;
+    public Long getExternalID() {
+        return externalID;
     }
 
-    public void setPmsID(String pmsID) {
-        this.pmsID = pmsID;
+    public void setExternalID(Long externalID) {
+        this.externalID = externalID;
     }
 
     public Long getOrganization() {

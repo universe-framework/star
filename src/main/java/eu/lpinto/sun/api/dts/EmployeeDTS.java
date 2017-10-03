@@ -1,7 +1,6 @@
 package eu.lpinto.sun.api.dts;
 
 import eu.lpinto.universe.api.dts.AbstractDTS;
-import eu.lpinto.universe.api.dts.AbstractDTS;
 import eu.lpinto.sun.persistence.entities.Employee;
 import eu.lpinto.sun.persistence.entities.WorkerProfile;
 
@@ -18,19 +17,17 @@ public class EmployeeDTS extends AbstractDTS<Employee, eu.lpinto.sun.api.dto.Emp
         if (entity == null) {
             return null;
 
-        }
-        else if (entity.isFull()) {
+        } else if (entity.isFull()) {
             return new eu.lpinto.sun.api.dto.Employee(
-                    entity.getPmsID(),
+                    entity.getExternalID(),
                     PersonDTS.id(entity.getPerson()),
                     OrganizationDTS.id(entity.getOrganization()),
                     entity.getProfile() == null ? null : entity.getProfile().ordinal(),
                     entity.getId(), entity.getName(), entity.getCreated(), entity.getUpdated());
 
-        }
-        else {
+        } else {
             return new eu.lpinto.sun.api.dto.Employee(
-                    entity.getPmsID(),
+                    entity.getExternalID(),
                     PersonDTS.id(entity.getPerson()),
                     OrganizationDTS.id(entity.getOrganization()),
                     entity.getProfile() == null ? null : entity.getProfile().ordinal(),
@@ -50,7 +47,7 @@ public class EmployeeDTS extends AbstractDTS<Employee, eu.lpinto.sun.api.dto.Emp
     @Override
     public Employee toDomain(eu.lpinto.sun.api.dto.Employee dto) {
         return new Employee(
-                dto.getPmsID(),
+                dto.getExternalID(),
                 PersonDTS.T.toDomain(dto.getPerson()),
                 OrganizationDTS.T.toDomain(dto.getOrganization()),
                 dto.getRole() == null ? null : WorkerProfile.values()[dto.getRole()],
